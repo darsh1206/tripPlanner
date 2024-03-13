@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1286dp"
+        android:background="#f0f0f0">
+
+        <TextView
+            android:id="@+id/welcomeMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:text="Welcome to Trip Planner!"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/travelQuote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcomeMessage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:text="Adventure is worthwhile in itself."
+            android:textColor="#757575"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/travelQuote"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="50dp"
+            >
+
+            <TextView
+                android:id="@+id/nameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:paddingStart="0dp"
+                android:text="Enter your full name"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameLabel"
+                android:background="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:hint="eg. John Smith"
+                android:inputType="text"
+                android:padding="5dp"
+                android:textColor="#333"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/membersLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginTop="25dp"
+                android:padding="10dp"
+                android:paddingStart="0dp"
+                android:text="Enter the number of members"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+            <LinearLayout
+                android:id="@id/memberContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/membersLabel">
+                <EditText
+                    android:id="@+id/adults"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:fontFamily="sans-serif"
+                    android:hint="Adults"
+                    android:inputType="number"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textSize="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/children"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:fontFamily="sans-serif"
+                    android:hint="Children"
+                    android:inputType="number"
+                    android:padding="5dp"
+                    android:paddingStart="10dp"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/equalsTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="="
+                    android:textSize="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:fontFamily="sans-serif"
+                    android:padding="5dp"
+                    android:hint="Total"
+                    android:paddingStart="10dp"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/memberContainer"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text=""
+                android:textColor="@color/red"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/tripPlanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/error"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/teal_700"
+                android:textColor="@color/white"
+                android:padding="5dp"
+                android:text="Lets plan a Trip!!!"
+
+                />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

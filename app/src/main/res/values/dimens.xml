@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <dimen name="_10dp">10dp</dimen>
+    <dimen name="title_padding">15dp</dimen>
+    <dimen name="label_size">17dp</dimen>
+    <dimen name="title_size">20dp</dimen>
+    <dimen name="_50dp">50dp</dimen>
+    <dimen name="_100dp">100dp</dimen>
+
+</resources>

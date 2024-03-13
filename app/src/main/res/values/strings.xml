@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Trip Planner</string>
+    <string-array name="transportationMode">
+        <item>--Select--</item>
+        <item>Bus</item>
+        <item>Train</item>
+        <item>Airplane</item>
+        <item>Ship</item>
+    </string-array>
+</resources>
