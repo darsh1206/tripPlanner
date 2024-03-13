@@ -1,33 +1,20 @@
 package com.example.assignment1;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.app.DatePickerDialog;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 
-
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
-    private SharedPreferences savedValues;
     private EditText personName;
     private EditText adults;
     private EditText children;

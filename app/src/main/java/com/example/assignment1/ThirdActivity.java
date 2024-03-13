@@ -48,21 +48,6 @@ public class ThirdActivity extends AppCompatActivity {
             Log.d(TAG,e.toString());
         }
 
-        // values
-//        try {
-//            adults = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("adultsNum")));
-//            children = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("childrenNum")));
-//            departure = getIntent().getStringExtra("departure");
-//            arrival = getIntent().getStringExtra("arrival");
-//            mode = getIntent().getStringExtra("mode");
-//            totalPrice = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("totalPrice")));
-//
-//        }
-//        catch (Exception e){
-//
-//        }
-
-
         // variables
         summary = findViewById(R.id.summaryPoints);
         putSummary();
