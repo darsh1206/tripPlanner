@@ -1,7 +1,5 @@
 package com.example.assignment1;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -9,12 +7,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
 import java.util.Objects;
 
-public class ThirdActivity extends AppCompatActivity {
+public class SummaryPage extends AppCompatActivity {
 
-    public static final String TAG = SecondActivity.class.getSimpleName();
+    public static final String TAG = TripDetailsPage.class.getSimpleName();
     private String departure;
     private String arrival;
     private String personName;

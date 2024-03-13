@@ -7,11 +7,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.app.DatePickerDialog;
-import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ActionMenuView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,8 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 
 
-public class SecondActivity extends AppCompatActivity {
-    public static final String TAG = SecondActivity.class.getSimpleName();
+public class TripDetailsPage extends AppCompatActivity {
+    public static final String TAG = TripDetailsPage.class.getSimpleName();
     private String personName;
     private int adults;
     private int children;
@@ -55,7 +52,7 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "On Input Page");
         setContentView(R.layout.firstpage);
-        Toast t = Toast.makeText(SecondActivity.this, "Lets begin planning your trip.", Toast.LENGTH_LONG);
+        Toast t = Toast.makeText(TripDetailsPage.this, "Lets begin planning your trip.", Toast.LENGTH_LONG);
         t.show();
 
         // person name
@@ -110,16 +107,9 @@ public class SecondActivity extends AppCompatActivity {
                 db.addNewEntry(trip_id, adults,children);
                 db.addNewEntry(trip_id, budgetValue, modeName);
 
-                Intent it = getIntent();
-                it = new Intent(SecondActivity.this, ThirdActivity.class);
-                it.putExtra("adultsNum",String.valueOf(adults));
-                it.putExtra("childrenNum", String.valueOf(children));
-                it.putExtra("departure", departure.getText().toString());
-                it.putExtra("arrival", arrival.getText().toString());
-                it.putExtra("mode", modeName);
-                it.putExtra("totalPrice", String.valueOf(totalPrice));
-                it.putExtra("trip_id", String.valueOf(trip_id));
-                startActivity(it);
+                Intent intent = new Intent(TripDetailsPage.this, PreparationPage.class);
+                intent.putExtra("trip_id", String.valueOf(trip_id));
+                startActivity(intent);
             }
         });
 

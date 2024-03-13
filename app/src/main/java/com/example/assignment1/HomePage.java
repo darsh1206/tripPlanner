@@ -13,8 +13,8 @@ import java.util.Objects;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 
-public class MainActivity extends AppCompatActivity {
-    public static final String TAG = MainActivity.class.getSimpleName();
+public class HomePage extends AppCompatActivity {
+    public static final String TAG = HomePage.class.getSimpleName();
     private EditText personName;
     private EditText adults;
     private EditText children;
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             error.setText("");
 
             // Create an Intent to start SecondActivity
-            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            Intent intent = new Intent(HomePage.this, TripDetailsPage.class);
 
             adultsNum = Integer.parseInt(Objects.requireNonNull(adults.getText().toString()));
             childrenNum = Integer.parseInt(Objects.requireNonNull(children.getText().toString()));

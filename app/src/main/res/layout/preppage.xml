@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightgray">
+
+    <TextView
+        android:id="@+id/taskToolTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prepare a list of preparation tasks for a trip."
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="30dp"
+
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskToolTip"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/newTask">
+        <EditText
+            android:id="@+id/taskTitleIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Task Title(less than 40 letters)"
+            style="@style/dates_input"/>
+
+        <Spinner
+            android:id="@+id/status"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:entries="@array/taskStatus"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center"
+            android:layout_marginLeft="20dp"
+            android:background="@color/teal_700"
+            />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/taskDescription"
+        style="@style/dates_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newTask"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:inputType="text"
+        android:hint="Task Description (less than 200 letters)" />
+
+    <LinearLayout
+        android:id="@+id/buttons"
+        android:layout_below="@id/taskDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_centerHorizontal="true">
+        <Button
+            android:id="@+id/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:textColor="@color/white"
+            android:background="@color/teal_700"
+            />
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Task"
+            android:textColor="@color/white"
+            android:background="@color/teal_700"
+            android:layout_marginStart="100dp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/taskError"
+        android:layout_below="@id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/red"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/listTitle"
+        style="@style/title_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taskError"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="Preparation List" />
+
+
+    <ListView
+        android:layout_below="@+id/listTitle"
+        android:id="@+id/task_list_view"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"/>
+
+</RelativeLayout>

@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class TripDataBase extends SQLiteOpenHelper {
-    public static final String TAG = SecondActivity.class.getSimpleName();
+    public static final String TAG = TripDetailsPage.class.getSimpleName();
     // Database versions and name
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "TripPlannerDB.db";

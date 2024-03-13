@@ -7,4 +7,11 @@
         <item>Airplane</item>
         <item>Ship</item>
     </string-array>
+
+    <string-array name="taskStatus">
+        <item>--Select--</item>
+        <item>Pending</item>
+        <item>In Progress</item>
+        <item>Completed</item>
+    </string-array>
 </resources>
