@@ -1,21 +1,15 @@
 package com.example.assignment1;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.assignment1.ui.theme.Task;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskAdapter extends ArrayAdapter<Task> {
@@ -23,6 +17,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         super(context, 0, tasks);
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Task task = getItem(position);
@@ -37,17 +32,31 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         titleText.setText(task.getTitle());
         statusText.setText(task.getStatus());
+        statusText.setVisibility(View.GONE);
+        switch (statusText.getText().toString()){
+            case "Pending":
+                statusText.setTextColor(getContext().getResources().getColor(R.color.orange));
+                break;
+            case "In Progress":
+                statusText.setTextColor(getContext().getResources().getColor(R.color.yellow));
+                break;
+            case "Completed":
+                statusText.setTextColor(getContext().getResources().getColor(R.color.green));
+                break;
+        }
         descriptionText.setText(task.getDescription());
-        descriptionText.setVisibility(View.GONE); // Initially hide the description
+        descriptionText.setVisibility(View.GONE);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Toggle visibility of the description
-                if (descriptionText.getVisibility() == View.GONE) {
+                if (descriptionText.getVisibility() == View.GONE && statusText.getVisibility() == View.GONE) {
                     descriptionText.setVisibility(View.VISIBLE);
+                    statusText.setVisibility(View.VISIBLE);
                 } else {
                     descriptionText.setVisibility(View.GONE);
+                    statusText.setVisibility(View.GONE);
                 }
             }
         });

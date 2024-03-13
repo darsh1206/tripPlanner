@@ -26,10 +26,10 @@
         android:id="@+id/newTask">
         <EditText
             android:id="@+id/taskTitleIn"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="Task Title(less than 40 letters)"
+            android:hint="Task Title"
             style="@style/dates_input"/>
 
         <Spinner
@@ -55,7 +55,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:inputType="text"
-        android:hint="Task Description (less than 200 letters)" />
+        android:hint="Task Description" />
 
     <LinearLayout
         android:id="@+id/buttons"
@@ -108,11 +108,27 @@
         android:text="Preparation List" />
 
 
+
     <ListView
+
         android:layout_below="@+id/listTitle"
         android:id="@+id/task_list_view"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:layout_margin="10dp"/>
+
+    <Button
+        android:id="@+id/summaryPageBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/task_list_view"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/teal_700"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:text="View Summary"
+
+        />
 
 </RelativeLayout>

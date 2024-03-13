@@ -46,62 +46,65 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/title_background"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_margin="20dp"
         android:text="Checklist"
         />
 
-    <CheckBox
-        android:id="@+id/checkbox1"
+    <ScrollView
         android:layout_below="@id/checklist"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/checkboxContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            >
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/fileLabel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Verify passports, visas, and tickets."
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
-        android:textSize="17dp"
+        android:layout_below="@id/checklist"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:checked="false" />
-    <CheckBox
-        android:id="@+id/checkbox2"
-        android:layout_below="@+id/checkbox1"
-        android:layout_width="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Save summary changes to a specified file"
+        style="@style/labels"
+        android:padding="0dp"
+
+        />
+
+    <LinearLayout
+        android:layout_below="@id/fileLabel"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Inform bank, carry multiple payment methods."
-        android:checked="false"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
-        android:textSize="17dp" />
-    <CheckBox
-        android:id="@+id/checkbox3"
-        android:layout_below="@+id/checkbox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Essential clothing, chargers, medications."
-        android:checked="false"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
-        android:textSize="17dp"/>
-    <CheckBox
-        android:id="@+id/checkbox4"
-        android:layout_below="@+id/checkbox3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get vaccinations, carry a first-aid kit."
-        android:checked="false"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
-        android:textSize="17dp"/>
-    <CheckBox
-        android:id="@+id/checkbox5"
-        android:layout_below="@+id/checkbox4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirm accommodations, know basic local phrases."
-        android:checked="false"
-        android:layout_marginLeft="20dp"
-        android:textColor="@color/black"
-        android:textSize="17dp"/>
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        >
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/dates_input"
+            android:hint="Enter file Name"
+            android:padding="@dimen/_10dp"
+            android:layout_marginEnd="40dp"
+            />
+        <Button
+            layout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="save"
+            android:background="@color/teal_700"
+            android:textColor="@color/white"
+            />
+    </LinearLayout>
 
 </RelativeLayout>

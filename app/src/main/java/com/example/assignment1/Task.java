@@ -1,4 +1,4 @@
-package com.example.assignment1.ui.theme;
+package com.example.assignment1;
 
 import android.util.Log;
 

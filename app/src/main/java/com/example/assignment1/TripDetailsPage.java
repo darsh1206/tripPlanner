@@ -52,6 +52,8 @@ public class TripDetailsPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "On Input Page");
         setContentView(R.layout.firstpage);
+
+        // making a toast
         Toast t = Toast.makeText(TripDetailsPage.this, "Lets begin planning your trip.", Toast.LENGTH_LONG);
         t.show();
 
@@ -109,6 +111,7 @@ public class TripDetailsPage extends AppCompatActivity {
 
                 Intent intent = new Intent(TripDetailsPage.this, PreparationPage.class);
                 intent.putExtra("trip_id", String.valueOf(trip_id));
+                intent.putExtra("total_price", String.valueOf(totalPrice));
                 startActivity(intent);
             }
         });

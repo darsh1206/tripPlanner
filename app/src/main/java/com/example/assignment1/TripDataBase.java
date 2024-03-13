@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TripDataBase extends SQLiteOpenHelper {
     public static final String TAG = TripDetailsPage.class.getSimpleName();
     // Database versions and name
@@ -52,20 +55,33 @@ public class TripDataBase extends SQLiteOpenHelper {
                 + "FOREIGN KEY (trip_id) REFERENCES person_trip(trip_id)" + ")";
         db.execSQL(TRIP_DETAILS);
         Log.d(TAG, "Created a new table of trip details");
+
+        String TASK_DETAILS = "CREATE TABLE task_details ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "trip_id INTEGER,"
+                + "task_title TEXT,"
+                + "task_status TEXT,"
+                + "task_description TEXT,"
+                + "FOREIGN KEY (trip_id) REFERENCES person_trip(trip_id)" + ")";
+        db.execSQL(TASK_DETAILS);
+        Log.d(TAG, "Created a new table of task details");
     }
 
     // Upgrading Database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS person_trip");
-        db.execSQL("DROP TABLE IF EXISTS trip_dates");
-        db.execSQL("DROP TABLE IF EXISTS trip_members");
-        db.execSQL("DROP TABLE IF EXISTS trip_details");
-        Log.d(TAG, "Deleted all tables");
+        if (oldVersion < 2) {
+            db.execSQL("DROP TABLE IF EXISTS person_trip");
+            db.execSQL("DROP TABLE IF EXISTS trip_dates");
+            db.execSQL("DROP TABLE IF EXISTS trip_members");
+            db.execSQL("DROP TABLE IF EXISTS trip_details");
+            db.execSQL("DROP TABLE IF EXISTS task_details");
+            Log.d(TAG, "Deleted all tables");
 
-        // Create tables again
-        onCreate(db);
+            // Create tables again
+            onCreate(db);
+        }
     }
 
     public int addNewEntry(String name) {
@@ -158,6 +174,23 @@ public class TripDataBase extends SQLiteOpenHelper {
         Log.d(TAG, "Closed the write mode database");
     }
 
+    public void addNewEntry(int id, String title, String status, String description){
+        // Open Database
+        SQLiteDatabase writer = this.getWritableDatabase();
+        Log.d(TAG, "Opened DataBase in write mode");
+
+        // Created a new entry
+        String query = "INSERT INTO task_details (trip_id, task_title, task_status, task_description) VALUES (" + id + ", '" + title + "', '"+ status +"', '" + description + "')";
+
+        // Executed a new entry
+        writer.execSQL(query);
+        Log.d(TAG, "Added new Task Details Entry");
+
+        // Close Database
+        writer.close();
+        Log.d(TAG, "Closed the write mode database");
+    }
+
     @SuppressLint("Range")
     public String getData(int id){
         StringBuilder data = new StringBuilder();
@@ -195,4 +228,50 @@ public class TripDataBase extends SQLiteOpenHelper {
         return data.toString();
 
     }
+
+    public List<Task> getTasks(int id) {
+        List<Task> tasks = new ArrayList<>();
+        SQLiteDatabase reader = null;
+        Cursor cursor = null;
+
+        try {
+            // Open Database
+            reader = this.getReadableDatabase();
+            Log.d(TAG, "Opened DataBase in read mode");
+
+            String query = "SELECT * FROM task_details WHERE trip_id = ?";
+            cursor = reader.rawQuery(query, new String[] { String.valueOf(id) });
+
+            // Move to the first row of the cursor
+            if (cursor.moveToFirst()) {
+                do {
+                    // Read the values of a row
+                    int c1 = cursor.getColumnIndex("task_title");
+                    int c2 = cursor.getColumnIndex("task_status");
+                    int c3 = cursor.getColumnIndex("task_description");
+                    String taskTitle = cursor.getString(c1);
+                    String taskStatus = cursor.getString(c2);
+                    String taskDescription = cursor.getString(c3);
+
+                    // Create a Task object and add it to the list
+                    Task task = new Task(taskTitle, taskStatus, taskDescription);
+                    tasks.add(task);
+                } while (cursor.moveToNext());
+                Log.d(TAG, "Tasks Added successfully");
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "Error while trying to get tasks from database", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            if (reader != null) {
+                reader.close();
+            }
+            Log.d(TAG, "Closed read mode DataBase");
+        }
+
+        return tasks;
+    }
+
 }
