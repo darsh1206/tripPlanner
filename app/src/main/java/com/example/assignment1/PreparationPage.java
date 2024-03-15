@@ -19,40 +19,43 @@ import java.util.List;
 import java.util.Objects;
 
 public class PreparationPage extends AppCompatActivity {
-    public static final String TAG = PreparationPage.class.getSimpleName();
-    private EditText title;
-    private EditText description;
+    public static final String TAG = PreparationPage.class.getSimpleName(); // Tag for logging
+
+    // UI Elements
+    private EditText title, description;
     private Spinner status;
-    private Button reset;
-    private Button add;
+    private Button reset, add, summaryPageBtn;
     private TextView error;
+    private ListView listView;
+
+    // Data Structures and Adapter
     private List<Task> taskList = new ArrayList<>();
     private TaskAdapter adapter;
-    private ListView listView;
-    private Button summaryPageBtn;
+
+    // Trip Details
     private String cityName;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preppage);
         Log.d("TAG", "On Preparation List Page");
 
-        // making a toast
+        // Display welcome Toast
         Toast t = Toast.makeText(PreparationPage.this, "Lets add some tasks for the trip.", Toast.LENGTH_LONG);
         t.show();
 
-        // getting data from intent
-        int trip_id =0;
-        int totalPrice =0;
+        // Get trip data from the intent
+        int trip_id = 0;
+        int totalPrice = 0;
         cityName = getIntent().getStringExtra("cityName");
         try {
-
             trip_id = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("trip_id")));
             totalPrice = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("total_price")));
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
         }
-        catch (Exception e){
-            Log.d(TAG,e.toString());
-        }
-        // taking variables values
+
+        // Initialize UI elements
         title = findViewById(R.id.taskTitleIn);
         status = findViewById(R.id.status);
         description = findViewById(R.id.taskDescription);
@@ -61,50 +64,62 @@ public class PreparationPage extends AppCompatActivity {
         error = findViewById(R.id.taskError);
         summaryPageBtn = findViewById(R.id.summaryPageBtn);
         listView = findViewById(R.id.task_list_view);
+
+        // Set up the TaskAdapter and connect it to the ListView
         adapter = new TaskAdapter(this, taskList);
         listView.setAdapter(adapter);
+
+        // Initialize the database
         TripDataBase db = new TripDataBase(this);
 
         Log.d("TAG", "Took input of all required variables");
 
-        reset.setOnClickListener(new View.OnClickListener(){
+        // 'Reset' button functionality
+        reset.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                title.setText("");
-                status.setSelection(0);
-                description.setText("");
+            public void onClick(View v) {
+                title.setText("");      // Clear the title field
+                status.setSelection(0); // Reset the status spinner
+                description.setText(""); // Clear the description field
                 Log.d("TAG", "Reset the fields");
             }
         });
 
-        add.setOnClickListener(new View.OnClickListener(){
+        // 'Add' button functionality
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                // checking for input errors
-                if(!checkTaskErrors()){
+            public void onClick(View v) {
+                if (!checkTaskErrors()) { // Check for errors in the new task
                     error.setText("");
-                    Log.d(TAG,"No Errors in inputs");
-                    // setting status value
+                    Log.d(TAG, "No Errors in inputs");
+
+                    // Get the status value
                     int position = status.getSelectedItemPosition();
-                    String statusVal="";
+                    String statusVal = "";
                     switch (position) {
-                        case 1:
-                            statusVal = "Pending";
-                            break;
-                        case 2:
-                            statusVal = "In Progress";
-                            break;
-                        case 3:
-                            statusVal = "Completed";
-                            break;
+                        case 1:  statusVal = "Pending"; break;
+                        case 2:  statusVal = "In Progress"; break;
+                        case 3:  statusVal = "Completed"; break;
                     }
+
+                    // Create a new task and add it to the list
                     Task newTask = new Task(title.getText().toString(), statusVal, description.getText().toString());
                     taskList.add(newTask);
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged(); // Update the ListView
+
+                    Toast t = Toast.makeText(PreparationPage.this, "Task " + title.getText().toString()+ " added", Toast.LENGTH_LONG);
+                    t.show();
                     Log.d("TAG", "Task added successfully");
-                    return;
+
+
+                    title.setText("");      // Clear the title field
+                    status.setSelection(0); // Reset the status spinner
+                    description.setText(""); // Clear the description field
+
+                } else {
+                    Log.d(TAG, "Some Errors in inputs");
                 }
-                Log.d(TAG,"Some Errors in inputs");
+
             }
         });
 
@@ -126,6 +141,7 @@ public class PreparationPage extends AppCompatActivity {
         });
     }
 
+    // checking task errors
     private boolean checkTaskErrors(){
         if(title.getText().toString().equals("")||description.getText().toString().equals("")||status.getSelectedItemPosition()==0){
             error.setText("Please fill out all fields of a new task");
@@ -145,6 +161,7 @@ public class PreparationPage extends AppCompatActivity {
                 return true;
             }
         }
+        Log.d(TAG,"Checking Task Errors");
         return false;
     }
 }

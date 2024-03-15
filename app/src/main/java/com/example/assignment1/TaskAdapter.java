@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -26,13 +27,17 @@ public class TaskAdapter extends ArrayAdapter<Task> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.task_element, parent, false);
         }
 
+        // initializing variables
         TextView titleText = convertView.findViewById(R.id.title);
         TextView statusText = convertView.findViewById(R.id.status);
         TextView descriptionText = convertView.findViewById(R.id.description);
 
+        // setting required properties
         titleText.setText(task.getTitle());
         statusText.setText(task.getStatus());
         statusText.setVisibility(View.GONE);
+
+        // changing colour of status element
         switch (statusText.getText().toString()){
             case "Pending":
                 statusText.setTextColor(getContext().getResources().getColor(R.color.orange));
@@ -47,6 +52,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         descriptionText.setText(task.getDescription());
         descriptionText.setVisibility(View.GONE);
 
+        // flipping the task element to display hidden data
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,12 +68,15 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         });
 
         ImageView deleteButton = convertView.findViewById(R.id.delete_button);
+        // Deleting the element
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Remove the item at 'position'
                 remove(getItem(position));
                 notifyDataSetChanged(); // Refresh the list view
+                Toast t = Toast.makeText(TaskAdapter.this.getContext(), "Task deleted", Toast.LENGTH_LONG);
+                t.show();
             }
         });
         return convertView;

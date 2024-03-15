@@ -53,7 +53,6 @@ public class SummaryPage extends AppCompatActivity {
 
         // getting data from intent
         int trip_id=0;
-
         cityName = getIntent().getStringExtra("cityName");
         try {
             trip_id = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("trip_id")));
@@ -62,12 +61,14 @@ public class SummaryPage extends AppCompatActivity {
         catch (Exception e){
             Log.d(TAG, e.toString());
         }
+
         TripDataBase db = new TripDataBase(this);
         // Fetching the summary Data
         String Data =  db.getData(trip_id);
         String [] dataParts = Data.split("_");
 
         try{
+            // taking data parts
             personName = dataParts[0];
             departure = dataParts[1];
             arrival = dataParts[2];
@@ -92,24 +93,30 @@ public class SummaryPage extends AppCompatActivity {
         putSummary();
         addTasks();
 
+        // Saving file to directory
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String file = fileName.getText().toString();
-                if(!file.equals("")){
-                    if(file.contains(".")){
-                        try {
-                            writeData(file);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                if(file.equals("")){
+                    try {
+                        writeData("summary.txt");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
-                    else{
-                        try {
-                            writeData(file + ".txt");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                }
+                if(file.contains(".")){
+                    try {
+                        writeData(file);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else{
+                    try {
+                        writeData(file + ".txt");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
 
@@ -129,19 +136,13 @@ public class SummaryPage extends AppCompatActivity {
             checkBox.setText(task.getTitle());
             checkBox.setChecked("Completed".equals(task.getStatus())); // Check the box if the task is completed
             checkboxContainer.addView(checkBox);
-
-            // Optionally, set an OnClickListener to update the task status in your database when checked/unchecked
-            checkBox.setOnClickListener(v -> {
-                boolean isChecked = checkBox.isChecked();
-                // Update the task status in your database
-                // Example: db.updateTaskStatus(task.getId(), isChecked ? "Completed" : "Pending");
-            });
         }
     }
 
+    // writing data into a temp file
     private void writeData(String fileName) throws IOException {
         StringBuilder dataBuilder = new StringBuilder(); // Use StringBuilder
-
+        Log.d(TAG,"Building the data");
         dataBuilder.append("--------- SUMMARY ---------\n"); // Append directly
         dataBuilder.append(summary.getText().toString());
         dataBuilder.append("\n--------- CHECKLIST ---------\n");
@@ -154,6 +155,7 @@ public class SummaryPage extends AppCompatActivity {
         Data = dataBuilder.toString();
 
         // Initiate file saving process with user interaction
+        Log.d(TAG,"Going to file directory of phone");
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("text/plain"); // Set appropriate MIME type
@@ -162,6 +164,7 @@ public class SummaryPage extends AppCompatActivity {
     }
 
 
+    // writing data into file
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -170,6 +173,7 @@ public class SummaryPage extends AppCompatActivity {
                 Uri uri = data.getData();
                 try ( OutputStream outputStream = getContentResolver().openOutputStream(uri)) {
                     outputStream.write(Data.getBytes());
+                    Log.d(TAG,"File Saved successfully");
 
                 } catch (IOException e) {
                     Log.d(TAG,e.toString());

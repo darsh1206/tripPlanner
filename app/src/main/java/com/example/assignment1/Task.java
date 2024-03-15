@@ -9,16 +9,15 @@ public class Task {
     private String title;
     private String status;
     private String description;
-    private boolean isExpanded;
 
     public Task(String title, String status, String description){
         this.title = title;
         this.status = status;
         this.description = description;
-        isExpanded=false;
         Log.d(TAG, "New Task created");
     }
 
+    // Methods to get Data
     public String getTitle() {
         return title;
     }
@@ -29,11 +28,4 @@ public class Task {
         return description;
     }
 
-    public boolean isExpanded() {
-        return isExpanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        isExpanded = expanded;
-    }
 }
