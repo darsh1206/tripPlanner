@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightgray">
+    android:background="@color/background">
 
 
     <ScrollView
@@ -12,21 +12,17 @@
         android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="25dp">
-
-
         <TextView
             android:id="@+id/greet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="50dp"
-            android:text="Lets Begin..."
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="@dimen/title_size"
-
+            android:textSize="20sp"
             />
 
         <RelativeLayout
@@ -42,7 +38,7 @@
                 style="@style/title_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Travel Details" />
+                android:text="@string/travel_label" />
 
             <LinearLayout
                 android:id="@+id/budgetContainer"
@@ -56,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/labels"
-                    android:text="Enter your travel budget"
+                    android:text="@string/budget_label"
                     android:paddingEnd="@dimen/_50dp"
                     android:paddingStart="10dp"
                     />
@@ -66,10 +62,11 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:hint="Budget"
+                    android:hint="@string/budget_hint"
                     android:padding="2.5dp"
                     android:textAlignment="center"
                     android:textColor="@color/black"/>
+
             </LinearLayout>
 
             <SeekBar
@@ -85,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/budgetBar"
                 style="@style/labels"
-                android:text="Select your departure and arrival dates"
+                android:text="@string/date_label"
                 android:layout_marginTop="20dp"
                 />
             <LinearLayout
@@ -99,8 +96,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/labels"
-                    android:text="From: "
-                    android:paddingEnd="10dp"
+                    android:text="@string/from"
+                    android:paddingStart="@dimen/_10dp"
+                    android:paddingEnd="@dimen/_10dp"
                     />
                 <EditText
                     android:id="@+id/departureDate"
@@ -113,8 +111,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/labels"
-                    android:text="To: "
-                    android:paddingEnd="10dp"
+                    android:text="@string/to"
+                    android:paddingStart="@dimen/_10dp"
+                    android:paddingEnd="@dimen/_10dp"
                     />
                 <EditText
                     android:id="@+id/arrivalDate"
@@ -131,11 +130,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/datesContainer"
                 android:textColor="@color/red"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:text=""
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/title_size"
+                android:layout_marginTop="20dp"
                 android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 />
 
             <TextView
@@ -145,7 +145,7 @@
                 android:layout_below="@id/dateError"
                 android:layout_marginTop="20dp"
                 style="@style/labels"
-                android:text="Select the mode of transportation"/>
+                android:text="@string/mode_label"/>
 
             <Spinner
                 android:id="@+id/mode"
@@ -157,7 +157,9 @@
                 android:spinnerMode="dropdown"
                 android:textAlignment="center"
                 android:layout_marginLeft="10dp"
-                android:background="@color/teal_700"
+                android:layout_marginRight="10dp"
+                android:background="@color/teal_200"
+                android:popupBackground="@color/teal_200"
                 />
 
 
@@ -167,9 +169,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mode"
                 android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/red"
-                android:textSize="15dp"
+                android:textSize="15sp"
+                android:layout_centerHorizontal="true"
                 android:textStyle="bold"
                 />
 
@@ -182,7 +186,8 @@
                 android:textStyle="bold"
                 android:lineHeight="25dp"
                 style="@style/labels"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_marginRight="@dimen/_10dp"
                 android:paddingTop="20dp"
                 />
         </RelativeLayout>
@@ -193,7 +198,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/slider"
-            android:background="@color/lightgray"
             android:paddingTop="50dp"
             >
 
@@ -202,7 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/teal_700"
-                android:text="Back"
+                android:text="@string/back_btn"
                 android:textColor="@color/white" />
 
             <Button
@@ -211,10 +215,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/teal_700"
                 android:layout_marginStart="185dp"
-                android:text="Next"
+                android:text="@string/next_btn"
                 android:textColor="@color/white" />
         </LinearLayout>
-
 
     </RelativeLayout>
     </ScrollView>

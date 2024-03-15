@@ -2,12 +2,14 @@ package com.example.assignment1;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,6 +42,7 @@ public class HomePage extends AppCompatActivity {
     private int adultsNum =0;
     private int childrenNum=0;
     private Spinner citySpinner;
+    private TextView link;
 
     @SuppressLint("MissingInflatedId")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class HomePage extends AppCompatActivity {
         tripMaker = findViewById(R.id.tripPlanner);
         citySpinner = findViewById(R.id.cities);
         new FetchCitiesTask().execute();
+        link = findViewById(R.id.visiter);
 
         TextWatcher numAdder = new TextWatcher() {
             @Override
@@ -78,6 +82,39 @@ public class HomePage extends AppCompatActivity {
                 personName = findViewById(R.id.name);
                 String[] nameParts = personName.getText().toString().split(" ");
                 checkForErrors(personName.getText().toString(), nameParts);
+            }
+        });
+
+        citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    link.setVisibility(View.GONE);
+                    Log.d(TAG, "Set the link invisible");
+                } else {
+                    link.setVisibility(View.VISIBLE);
+                    Log.d(TAG, "Set the link visible");
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                link.setVisibility(View.GONE);
+                Log.d(TAG, "Set the link invisible as nothing is selected");
+            }
+        });
+
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayAdapter<String> adapter = (ArrayAdapter<String>) citySpinner.getAdapter();
+                String cityName = adapter.getItem(citySpinner.getSelectedItemPosition());
+                cityName = cityName.split(",")[0];
+
+                // starting the intent for google browsing
+                Log.d(TAG,"Browsing to wikipedia for city: " + cityName);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://en.wikipedia.org/wiki/"+cityName));
+                startActivity(intent);
             }
         });
     }
@@ -110,17 +147,34 @@ public class HomePage extends AppCompatActivity {
         else if(nameParts.length<2 || name.length()<6){
             error.setText("Invalid Input Name.");
         }
-
+        else if(citySpinner.getSelectedItemPosition()==0){
+            error.setText("Please Select a city");
+        }
         else{
             error.setText("");
 
             // Create an Intent to start SecondActivity
             Intent intent = new Intent(HomePage.this, TripDetailsPage.class);
 
-            adultsNum = Integer.parseInt(Objects.requireNonNull(adults.getText().toString()));
-            childrenNum = Integer.parseInt(Objects.requireNonNull(children.getText().toString()));
+            try {
+                adultsNum = Integer.parseInt(Objects.requireNonNull(adults.getText().toString()));
+            }
+            catch (Exception e){
+                error.setText("Adults cannot be zero");
+                return;
+            }
+            try {
+                childrenNum = Integer.parseInt(Objects.requireNonNull(children.getText().toString()));
+            }
+            catch (Exception e){
+                childrenNum=0;
+            }
+            ArrayAdapter<String> adapter = (ArrayAdapter<String>) citySpinner.getAdapter();
+            String cityName = adapter.getItem(citySpinner.getSelectedItemPosition());
+
             // Optionally, add data to pass to the second activity
             intent.putExtra("name", name);
+            intent.putExtra("cityName", cityName);
             intent.putExtra("adults",String.valueOf(adultsNum));
             intent.putExtra("children", String.valueOf(childrenNum));
             // Start SecondActivity

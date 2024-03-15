@@ -1,5 +1,7 @@
 <resources>
+    <!--Application Title-->
     <string name="app_name">Trip Planner</string>
+    <!--Modes Array-->
     <string-array name="transportationMode">
         <item>--Select--</item>
         <item>Bus</item>
@@ -8,10 +10,53 @@
         <item>Ship</item>
     </string-array>
 
+    <!--Task Status Array-->
     <string-array name="taskStatus">
         <item>--Select--</item>
         <item>Pending</item>
         <item>In Progress</item>
         <item>Completed</item>
     </string-array>
+
+    <!--Home Page Attributes-->
+    <string name="heading">Welcome to Trip Planner!</string>
+    <string name="sub_heading">Adventure is worthwhile in itself.</string>
+    <string name="name_label">Enter your full name</string>
+    <string name="name_hint">eg. John Smith</string>
+    <string name="link">Find out more</string>
+    <string name="members_label">Enter the number of members</string>
+    <string name="adults_hint">Adults</string>
+    <string name="children_hint">Children</string>
+    <string name="total_hint">Total</string>
+    <string name="sign1">+</string>
+    <string name="sign2">=</string>
+    <string name="trip_planner">Lets Plan a Trip!!!</string>
+
+    <!--First Page Attributes-->
+    <string name="travel_label">Travel Details</string>
+    <string name="budget_label">Enter your travel budget</string>
+    <string name="budget_hint">Budget</string>
+    <string name="date_label">Select the dates of departure and arrival</string>
+    <string name="from">From: </string>
+    <string name="to">To: </string>
+    <string name="mode_label">Select the mode of transportation</string>
+    <string name="back_btn">Back</string>
+    <string name="next_btn">Next</string>
+
+    <!--Prep Page Attributes-->
+    <string name="task_label">Prepare a list of preparation tasks for a trip.</string>
+    <string name="title_hint">Title</string>
+    <string name="description_hint">Description</string>
+    <string name="reset_btn">Reset</string>
+    <string name="add_btn">Add Task</string>
+    <string name="summary_btn">View Summary</string>
+    <string name="prep_label">Preparation List</string>
+
+    <!--Last Page Attributes-->
+    <string name="success_label">Trip planned successfully</string>
+    <string name="summary_label">Summary</string>
+    <string name="checklist_label">Checklist</string>
+    <string name="file_label">Save summary changes to a specified file</string>
+    <string name="file_hint">Enter file Name</string>
+    <string name="save_btn">save</string>
 </resources>

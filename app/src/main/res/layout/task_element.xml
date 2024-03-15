@@ -23,15 +23,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/_10dp"
-        android:src="@drawable/twotone_delete_24" />
+        android:src="@drawable/twotone_delete_24"
+        />
 
     <TextView
         android:id="@+id/status"
-        android:layout_below="@id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:layout_margin="@dimen/_10dp"
+        android:layout_below="@id/title"
+        android:layout_marginStart="@dimen/_10dp"
+        android:layout_marginTop="@dimen/_10dp"
+        android:layout_marginEnd="@dimen/_10dp"
+        android:layout_marginBottom="@dimen/_10dp"
+        android:textStyle="bold"
+        android:padding="5dp"
         android:textSize="18sp" />
 
     <TextView
@@ -40,6 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10dp"
+        android:textColor="@color/black"
         android:textSize="14sp" />
 
 </RelativeLayout>

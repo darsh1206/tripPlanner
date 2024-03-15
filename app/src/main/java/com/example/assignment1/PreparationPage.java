@@ -30,6 +30,7 @@ public class PreparationPage extends AppCompatActivity {
     private TaskAdapter adapter;
     private ListView listView;
     private Button summaryPageBtn;
+    private String cityName;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preppage);
@@ -42,6 +43,7 @@ public class PreparationPage extends AppCompatActivity {
         // getting data from intent
         int trip_id =0;
         int totalPrice =0;
+        cityName = getIntent().getStringExtra("cityName");
         try {
 
             trip_id = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("trip_id")));
@@ -118,6 +120,7 @@ public class PreparationPage extends AppCompatActivity {
                 }
                 intent.putExtra("trip_id", String.valueOf(finalTrip_id));
                 intent.putExtra("total_price", String.valueOf(finalTotalPrice));
+                intent.putExtra("cityName", cityName);
                 startActivity(intent);
             }
         });

@@ -1,5 +1,8 @@
 package com.example.assignment1;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +15,14 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +41,9 @@ public class SummaryPage extends AppCompatActivity {
     private LinearLayout checkboxContainer;
     private EditText fileName;
     private Button saveBtn;
+    private String Data;
+    private static final int WRITE_REQUEST_CODE = 42;
+    private String cityName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +54,7 @@ public class SummaryPage extends AppCompatActivity {
         // getting data from intent
         int trip_id=0;
 
+        cityName = getIntent().getStringExtra("cityName");
         try {
             trip_id = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("trip_id")));
             totalPrice = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("total_price")));
@@ -107,7 +119,7 @@ public class SummaryPage extends AppCompatActivity {
 
     // This function generates the summary and displays it
     private void putSummary(){
-        String finalSummary = "➡ Trip members: "+ adults +" Adults and "+children+" Children.\n➡ Departure Date: "+ departure + "\n➡ Arrival Date: "+ arrival + "\n➡ Travel Mode: "+ mode + "\n➡ Total Travelling Price: "+ totalPrice;
+        String finalSummary = "➡ Trip City:"+ cityName +"\n➡ Trip members: "+ adults +" Adults and "+children+" Children.\n➡ Departure Date: "+ departure + "\n➡ Arrival Date: "+ arrival + "\n➡ Travel Mode: "+ mode + "\n➡ Total Travelling Price: "+ totalPrice;
         summary.setText(finalSummary);
     }
 
@@ -128,24 +140,42 @@ public class SummaryPage extends AppCompatActivity {
     }
 
     private void writeData(String fileName) throws IOException {
-        File file = new File(this.getExternalFilesDir(null), fileName);
-        FileOutputStream writer = null;
-        try {
-            writer = new FileOutputStream(file);
-            writer.write("--------- SUMMARY ---------\n".getBytes());
-            writer.write(summary.getText().toString().getBytes());
-            writer.write("\n--------- CHECKLIST ---------\n".getBytes());
-            for(Task task: tasks){
-                String data = task.getTitle()+ ": " +task.getDescription() + "\nStatus: " + task.getStatus() + "\n";
-            }
-            Log.d(TAG, "Write data into file");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(writer!=null){
-            writer.close();
+        StringBuilder dataBuilder = new StringBuilder(); // Use StringBuilder
+
+        dataBuilder.append("--------- SUMMARY ---------\n"); // Append directly
+        dataBuilder.append(summary.getText().toString());
+        dataBuilder.append("\n--------- CHECKLIST ---------\n");
+
+        for(Task task: tasks){
+            dataBuilder.append(task.getTitle()).append(": ").append(task.getDescription())
+                    .append("\nStatus: ").append(task.getStatus()).append("\n");
         }
 
+        Data = dataBuilder.toString();
+
+        // Initiate file saving process with user interaction
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/plain"); // Set appropriate MIME type
+        intent.putExtra(Intent.EXTRA_TITLE, fileName);
+        startActivityForResult(intent, WRITE_REQUEST_CODE);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == WRITE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                Uri uri = data.getData();
+                try ( OutputStream outputStream = getContentResolver().openOutputStream(uri)) {
+                    outputStream.write(Data.getBytes());
+
+                } catch (IOException e) {
+                    Log.d(TAG,e.toString());
+                }
+            }
+        }
+    }
+
 }

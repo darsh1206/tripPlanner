@@ -29,8 +29,8 @@ import androidx.annotation.Nullable;
 public class TripDetailsPage extends AppCompatActivity {
     public static final String TAG = TripDetailsPage.class.getSimpleName();
     private String personName;
-    private int adults;
-    private int children;
+    private int adults =0;
+    private int children =0;
     private TextView greeting;
     private SeekBar budgetBar;
     private TextView budget;
@@ -47,6 +47,7 @@ public class TripDetailsPage extends AppCompatActivity {
     private int[] modeRates={100,200,1000,2000};
     private TextView modeError;
     private int totalPrice =0;
+    private String cityName;
     @SuppressLint("MissingInflatedId")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,16 +63,12 @@ public class TripDetailsPage extends AppCompatActivity {
         // members
         try{
             adults = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("adults")));
-        }
-        catch (Exception e){
-            adults =0;
-        }
-        try{
             children = Integer.parseInt(Objects.requireNonNull(getIntent().getStringExtra("children")));
         }
         catch (Exception e){
-            children =0;
+            Log.d(TAG,e.toString());
         }
+        cityName = getIntent().getStringExtra("cityName");
 
         // Greet user
         greeting = findViewById(R.id.greet);
@@ -112,6 +109,7 @@ public class TripDetailsPage extends AppCompatActivity {
                 Intent intent = new Intent(TripDetailsPage.this, PreparationPage.class);
                 intent.putExtra("trip_id", String.valueOf(trip_id));
                 intent.putExtra("total_price", String.valueOf(totalPrice));
+                intent.putExtra("cityName", cityName);
                 startActivity(intent);
             }
         });
