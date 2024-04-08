@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +54,7 @@ public class HomePage extends AppCompatActivity {
     private int childrenNum=0;
     private Spinner citySpinner;
     private TextView link;
-
+    private ImageView maps;
     private static final String[] PERMISSIONS = {
             Manifest.permission.POST_NOTIFICATIONS
     };
@@ -81,6 +82,7 @@ public class HomePage extends AppCompatActivity {
         tripMaker = findViewById(R.id.tripPlanner);
         citySpinner = findViewById(R.id.cities);
         link = findViewById(R.id.visiter);
+        maps = findViewById(R.id.maps);
         Log.d(TAG,"Attributes assigned successfully");
 
         // Fetch cities from the JSON file and load them into the spinner
@@ -109,6 +111,15 @@ public class HomePage extends AppCompatActivity {
                 personName = findViewById(R.id.name);
                 String[] nameParts = personName.getText().toString().split(" ");
                 checkForErrors(personName.getText().toString(), nameParts);
+            }
+        });
+
+        maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cityName = citySpinner.getSelectedItem().toString();
+                Log.d(TAG,"City name: "+ cityName);
+                openCityInMaps(cityName);
             }
         });
 
@@ -273,6 +284,18 @@ public class HomePage extends AppCompatActivity {
             Log.d(TAG,"Added cities to dropdown menu");
         }
     }
-    
+    private void openCityInMaps(String cityName) {
+        // Construct the URI for Google Maps with the city name
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(cityName));
+
+        // Create an intent to launch Google Maps
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        // Verify that Google Maps app is installed before starting the intent
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
+    }
 
 }
