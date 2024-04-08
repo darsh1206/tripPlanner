@@ -69,7 +69,7 @@
                 <action android:name="com.example.assignment1.FILE_SAVED_ACTION" />
             </intent-filter>
         </receiver>
-
+        <service android:name=".CityFetchService" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

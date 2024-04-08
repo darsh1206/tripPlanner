@@ -69,7 +69,6 @@ public class HomePage extends AppCompatActivity {
 
         if (!shouldShowRationale) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, 100);
-            Toast.makeText(this, "Permissions are accepted", Toast.LENGTH_LONG).show();
         }
 
 
@@ -118,8 +117,9 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String cityName = citySpinner.getSelectedItem().toString();
-                Log.d(TAG,"City name: "+ cityName);
-                openCityInMaps(cityName);
+                if(cityName.charAt(0)!='-') {
+                    openCityInMaps(cityName);
+                }
             }
         });
 
