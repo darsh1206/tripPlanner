@@ -7,6 +7,8 @@
     Description		: This is a homepage for Trip Planner application
 */
 package com.example.assignment1;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -22,6 +24,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -32,6 +36,8 @@ import java.util.Objects;
 import java.util.Scanner;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -48,11 +54,23 @@ public class HomePage extends AppCompatActivity {
     private Spinner citySpinner;
     private TextView link;
 
+    private static final String[] PERMISSIONS = {
+            Manifest.permission.POST_NOTIFICATIONS
+    };
     @SuppressLint("MissingInflatedId")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG,"Application created"); // Logs when the app is created
         setContentView(R.layout.homepage); // Sets the layout for the activity
+
+        boolean shouldShowRationale = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                ActivityCompat.shouldShowRequestPermissionRationale(HomePage.this, Manifest.permission.POST_NOTIFICATIONS);
+
+        if (!shouldShowRationale) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, 100);
+            Toast.makeText(this, "Permissions are accepted", Toast.LENGTH_LONG).show();
+        }
+
 
         // Initialize UI elements
         personName = findViewById(R.id.name);
@@ -255,5 +273,6 @@ public class HomePage extends AppCompatActivity {
             Log.d(TAG,"Added cities to dropdown menu");
         }
     }
+    
 
 }

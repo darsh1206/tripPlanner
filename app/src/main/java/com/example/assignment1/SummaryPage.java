@@ -1,8 +1,16 @@
 package com.example.assignment1;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,12 +53,14 @@ public class SummaryPage extends AppCompatActivity {
     private String Data;
     private static final int WRITE_REQUEST_CODE = 42;
     private String cityName;
+    public static final String FILE_SAVED_ACTION = "com.example.assignment1.FILE_SAVED_ACTION";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("TAG", "On Final Page");
         setContentView(R.layout.lastpage);
+        createNotificationChannel();
 
         // getting data from intent
         int trip_id=0;
@@ -105,7 +116,7 @@ public class SummaryPage extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                 }
-                if(file.contains(".")){
+                else if(file.contains(".")){
                     try {
                         writeData(file);
                     } catch (IOException e) {
@@ -121,7 +132,11 @@ public class SummaryPage extends AppCompatActivity {
                 }
 
             }
+
         });
+
+
+
     }
 
     // This function generates the summary and displays it
@@ -163,6 +178,18 @@ public class SummaryPage extends AppCompatActivity {
         startActivityForResult(intent, WRITE_REQUEST_CODE);
     }
 
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Saved";
+            String description = "File saved Successfully";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("101", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
     // writing data into file
     @Override
@@ -175,11 +202,35 @@ public class SummaryPage extends AppCompatActivity {
                     outputStream.write(Data.getBytes());
                     Log.d(TAG,"File Saved successfully");
 
+                    // Send a broadcast
+                    Intent broadcastIntent = new Intent(FILE_SAVED_ACTION);
+                    sendBroadcast(broadcastIntent);
+
+                    scheduleNotification();
+
                 } catch (IOException e) {
                     Log.d(TAG,e.toString());
                 }
             }
         }
+
+
     }
 
+    private void scheduleNotification() {
+        Intent notificationIntent = new Intent(this, Receiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        long triggerTime = System.currentTimeMillis() + 10000; // 10 seconds
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+        }
+    }
+
+
+
 }
+
+

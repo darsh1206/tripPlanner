@@ -98,10 +98,10 @@ public class TripDetailsPage extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkForDateErrors(departure.getText().toString(), arrival.getText().toString()) ||
-                        updateBudgetError(totalPrice, budgetValue)) {
-                    return; // Stop if there are errors
-                }
+//                if (checkForDateErrors(departure.getText().toString(), arrival.getText().toString()) ||
+//                        updateBudgetError(totalPrice, budgetValue)) {
+//                    return; // Stop if there are errors
+//                }
 
                 int trip_id = db.addNewEntry(personName); // Create a new trip entry in the database
                 // Add trip details to the database
